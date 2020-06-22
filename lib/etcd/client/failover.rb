@@ -87,7 +87,7 @@ module Etcd
       logger.debug("request_data:  #{method} - #{uri} #{args.inspect}")
       begin
         super
-      rescue Errno::ECONNREFUSED, HTTPClient::TimeoutError => e
+      rescue Errno::ECONNREFUSED, HTTPClient::TimeoutError, Errno::EHOSTUNREACH, Errno::ETIMEDOUT => e
         logger.debug("request_data:  re-election handling")
         old_leader_uri = @leader.client_urls.first
         update_cluster

@@ -37,7 +37,7 @@ module Etcd
         leader_data = request_data(:get, leader_uri)
         @status     = :running
         @is_leader  = (leader_data["id"] == @id)
-      rescue HTTPClient::TimeoutError, Errno::ECONNREFUSED => e
+      rescue HTTPClient::TimeoutError, Errno::ECONNREFUSED, Errno::EHOSTUNREACH, Errno::ETIMEDOUT => e
         @status = :down
       end
     end
